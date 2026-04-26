@@ -1,0 +1,31 @@
+@use 'variables' as *;
+@use 'header';
+
+// Footer
+
+footer {
+	text-align: center;
+	border-top: $border-color solid 2px;
+	position: relative;
+	&::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-color: $accent-color;
+		opacity: 0.3;
+		z-index: -1;
+	}
+}
+
+// Cards
+
+.card {
+	border: $border-color solid 2px;
+	border-radius: $general-radius;
+	box-shadow: 4px 4px 0px $accent-color;
+}
+
+#cards-container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+}

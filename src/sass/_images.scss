@@ -1,0 +1,23 @@
+@mixin img{
+    height: auto;
+    vertical-align: middle;
+}
+
+img{
+    @include img;
+    width: 100%;
+}
+
+svg{
+    @include img;
+    width: 100%;
+}
+
+picture{
+    @include img;
+}
+
+.icon{
+    @include img;
+    width: 50px;
+}

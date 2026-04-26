@@ -1,0 +1,86 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "sass:math";
+@use 'sass:list';
+
+$j-content-list: flex-start,flex-end,center,space-between,space-around;
+$j-content-names: s,e,c,b,a;
+$a-items-list: center,flex-start,flex-end,stretch,baseline;
+$a-items-names: c,s,e,stretch,baseline;
+$padding-propperties:'padding','padding-top','padding-bottom','padding-left','padding-right','padding-left','padding-top';
+$padding-pdual:'','','','','','padding-right','padding-bottom';
+$padding-names:p,pt,pb,pl,pr,px,py;
+$margin-propperties:'margin','margin-top','margin-bottom','margin-left','margin-right','margin-left','margin-top';
+$margin-pdual:'','','','','','margin-right','margin-bottom';
+$margin-names:m,mt,mb,ml,mr,mx,my;
+$gap-propperties: 'gap','row-gap','column-gap';
+$gap-names: '','r','c';
+
+.section-margin{
+    width: $section-margin;
+    margin: 0 auto;
+}
+
+// general FLEX
+
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    > *{
+        min-width: 0;
+        overflow: hidden;
+    }
+}
+
+// Responsive Layout
+@for $s from 1 through list.length($bp-sizes){
+    $n: list.nth($bp-names,$s);
+    @media (min-width: list.nth($bp-sizes,$s)) {
+        // Flex
+
+            // Columnas
+        @for $i from 1 through 12{
+            .col#{$n}-#{$i}{
+                flex: 0 0 math.div(100%,$i);
+            }
+        }
+        @for $i from 4 through 9{
+            @if($i != 5){
+                .col#{$n}-p#{$i}0{
+                    flex: 0 0 ($i * 10%);
+                }
+            }
+        }
+
+        // Utilities
+        
+        @include flex-config($j-content-list,$j-content-names,jc#{$n},justify-content); //justify content
+        @include flex-config($a-items-list,$a-items-names,ai#{$n},align-items); // align items
+        @include gap-config($spacing-sizes,$gap-names,$n,$gap-propperties);
+        .fw#{$n}{
+            flex-wrap: wrap;
+        }
+        .fnw#{$n}{
+            flex-wrap: nowrap;
+        }
+        .fd-c#{$n}{
+            flex-direction: column;
+        }
+        .fd-r#{$n}{
+            flex-direction: row;
+        }
+
+        // Paddings
+
+        @include spacing-builder($padding-propperties,$padding-pdual,$spacing-sizes,$padding-names,$n);
+
+        // Margins
+
+        @include spacing-builder($margin-propperties,$margin-pdual,$spacing-sizes,$margin-names,$n);
+    }
+}
+
+
+
+

@@ -1,0 +1,12 @@
+@use 'variables' as *;
+
+input {
+	font-family: inherit;
+	padding: 0.5rem;
+	border-radius: $general-radius;
+	width: 100%;
+	&:focus {
+		outline: none;
+		border: $border-color solid 2px;
+	}
+}

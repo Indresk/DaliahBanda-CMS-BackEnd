@@ -1,0 +1,11 @@
+<div class="flex jc-c ai-c">
+    <div class="card p-4">
+        <h1>CMS - LOGIN</h1>
+        <p>{{error}}</p>
+        <form class="flex fd-c g-2" action="/auth/login" method="post">
+            <label >User: <input type="email" name="email" id="email" required autocomplete="email"></label>
+            <label >Password: <input type="password" name="password" id="password" required autocomplete="current-password"></label>
+            <button type="submit">LogIn</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{metaInfo.title}}</title>
+    <link rel="stylesheet" href="{{globalInfo.styles}}">
+</head>
+<body id="react-root">
+    <div id="root">
+    {{> header }}
+    {{{body}}}
+    {{> footer }}
+    </div>
+    {{> data }}
+    <script src="/js/main.bundle.js"></script>
+    <script src="/js/vendors.bundle.js"></script>
+</body>
+</html>

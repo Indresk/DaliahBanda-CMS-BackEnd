@@ -1,0 +1,42 @@
+{
+	"name": "handlebars-react-sass-template",
+	"version": "1.0.0",
+	"description": "A server-side rendering template combining Express.js with Handlebars templating and React for interactive client-side components, featuring Webpack bundling and SASS styling",
+	"main": "index.js",
+	"scripts": {
+		"build": "webpack --mode production",
+		"build:watch": "webpack --mode development --watch",
+		"prestart": "npm run build:css && npm run build",
+		"start": "node ./index.js",
+		"dev:css": "sass --watch --style expanded ./src/sass/index.scss ./public/css/styles.css",
+		"build:css": "sass --style compressed ./src/sass/index.scss ./public/css/styles.css",
+		"dev": "concurrently \"npm run build:watch\" \"node --watch ./index.js\" \"npm run dev:css\""
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"type": "module",
+	"dependencies": {
+		"@babel/core": "^7.29.0",
+		"@babel/preset-env": "^7.29.2",
+		"@babel/preset-react": "^7.28.5",
+		"argon2": "^0.44.0",
+		"babel-loader": "^10.1.1",
+		"cors": "^2.8.6",
+		"dotenv": "^17.4.1",
+		"express": "^5.2.1",
+		"express-handlebars": "^9.0.1",
+		"express-rate-limit": "^8.3.2",
+		"express-session": "^1.19.0",
+		"firebase-admin": "^13.8.0",
+		"raw-body": "^3.0.2",
+		"react": "^19.2.5",
+		"react-dom": "^19.2.5",
+		"session-file-store": "^1.5.0",
+		"webpack": "^5.106.0",
+		"webpack-cli": "^7.0.2"
+	},
+	"devDependencies": {
+		"concurrently": "^9.2.1"
+	}
+}

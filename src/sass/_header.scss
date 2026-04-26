@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+header {
+	anchor-name: --main-header;
+	background-color: $accent-color;
+	align-items: center;
+	padding: 0.5rem 1rem;
+	> h1 {
+		color: $background-color;
+		text-transform: uppercase;
+	}
+	& svg {
+		&.active {
+			color: $background-color;
+		}
+		&.inactive {
+			color: $inverted-text-color;
+		}
+	}
+}
+nav {
+	position: fixed;
+	position-anchor: --main-header;
+	top: anchor(bottom);
+	right: anchor(right);
+	background-color: $accent-color;
+	& li {
+		list-style: none;
+		> a {
+			text-transform: uppercase;
+			text-decoration: none;
+			color: $inverted-text-color;
+			&:hover {
+				color: $background-color;
+			}
+		}
+	}
+}

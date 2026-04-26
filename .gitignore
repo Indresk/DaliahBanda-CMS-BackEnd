@@ -1,0 +1,9 @@
+node_modules
+.env
+# .prettierignore
+
+*.map
+npm-debug.log*
+/public/js/*
+/public/css/*
+/localData/sessions/*

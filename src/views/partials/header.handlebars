@@ -1,0 +1,22 @@
+{{!-- {{#cleanToHydrate}} --}}
+<header class='header flex jc-b'>
+	<h1>{{metaInfo.title}}</h1>
+	<div id='nav-dropdown'
+		><nav class="hide"
+			><ul class='flex fd-c px-4 py-2 g-1'
+			>{{#each globalInfo.navLinks
+				}}<li><a href='{{this.link}}'>{{this.name}}</a></li
+			>{{/each
+			}}</ul
+		><form action="/auth/logout" method="post"><button type="submit" class="secondary">Logout</button></form></nav
+		><div class='icon'
+			><svg
+			class="inactive"
+			xmlns='http://www.w3.org/2000/svg' 
+			viewBox='0 0 24 24' fill='currentColor' 
+			stroke='currentColor'><path d='M4 5h16' /><path d='M4 12h16' /><path d='M4 19h16' /></svg
+		></div>
+	</div>
+	{{!-- {{#if isAuthenticated}}{{/if}} --}}
+</header>
+{{!-- {{/cleanToHydrate}} --}}

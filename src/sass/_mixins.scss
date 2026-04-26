@@ -1,0 +1,43 @@
+@use "variables" as *;
+@use 'sass:list';
+
+@mixin spacing-builder($p-type,$p-dual,$sz,$name,$bp){
+    @for $t from 1 through list.length($p-type){
+        $st: list.nth($p-type,$t);
+        $std: list.nth($p-dual,$t);
+        @for $i from 1 through list.length($sz){
+            $c: $i - 1;
+            $n: list.nth($name,$t);
+            .#{$n}#{$bp}-#{$c}{
+                #{$st}: list.nth($sz,$i);
+                @if($std != ''){
+                    #{$std}: list.nth($sz,$i);
+                }
+            }
+        }
+    }
+}
+
+@mixin flex-config($list,$names,$bp-name,$p){
+    @for $i from 1 through list.length($list){
+        $name: list.nth($names,$i);
+        $v: list.nth($list,$i);
+        .#{$bp-name}-#{$name}{
+            #{$p}: $v;
+        }
+    }
+}
+
+@mixin gap-config($list-spacings,$names,$bp-name,$p){
+    @for $n from 1 through list.length($names){
+        $name: list.nth($names,$n);
+        $proppertie: list.nth($p,$n);
+        @for $s from 1 through list.length($list-spacings){
+            $space: list.nth($list-spacings,$s);
+            $contador: $s - 1;
+            .g#{$name}#{$bp-name}-#{$contador}{
+                #{$proppertie}: $space;
+            }
+        }
+    }
+}
