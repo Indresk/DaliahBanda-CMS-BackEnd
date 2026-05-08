@@ -1,25 +1,32 @@
 const componentMap = [
 	{
-		id: 'test1',
+		id: 'cms-live',
 		hydrate: false,
 		pages: ['/'],
 		component: () =>
-			import(/* webpackChunkName: "test1" */ './components/App.jsx'),
+			import(/* webpackChunkName: "cms-live" */ './components/cms/LiveStatus.jsx'),
 	},
 	{
-		id: 'test2',
+		id: 'cms-deploy',
 		hydrate: false,
 		pages: ['/'],
 		component: () =>
-			import(/* webpackChunkName: "test2" */ './components/Test2.jsx'),
+			import(/* webpackChunkName: "cms-deploy" */ './components/cms/DeployButton.jsx'),
 	},
 	{
-		id: 'nav-dropdown',
-		hydrate: true,
-		pages: ['global'],
+		id: 'cms-content',
+		hydrate: false,
+		pages: ['/content'],
 		component: () =>
-			import(/* webpackChunkName: "test2" */ './components/NavDropdown.jsx'),
-		props: {},
+			import(/* webpackChunkName: "cms-content" */ './components/cms/ContentManager.jsx'),
+	},
+	{
+		id: 'cms-assets',
+		hydrate: false,
+		pages: ['/assets'],
+		component: () =>
+			import(/* webpackChunkName: "cms-assets" */ './components/cms/AssetsManager.jsx'),
 	},
 ];
+
 export default componentMap;

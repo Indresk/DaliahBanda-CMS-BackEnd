@@ -1,108 +1,130 @@
 # Daliah Banda CMS Backend
 
-Este es el backend CMS personalizado para la página web de **Daliah Banda** (daliahbanda.com). Es un sistema de gestión de contenido (CMS) construido con Node.js, Express, Handlebars y React integrado, diseñado para manejar assets, contenido dinámico y más. Incluye integraciones avanzadas con Vercel para redeploys automáticos del frontend, Cloudflare R2 para almacenamiento y gestión de assets, Firestore como base de datos principal, y un sistema de archivos JSON para caché rápido de datos, evitando consultas innecesarias a la base de datos en cada petición.
+This is the custom CMS backend for **Daliah Banda**'s website (daliahbanda.com). It is a content management system (CMS) built with Node.js, Express, Handlebars, and integrated React, designed to handle assets, dynamic content, and more. It includes advanced integrations with Vercel for automatic frontend redeploys, Cloudflare R2 for storage and asset management, Firestore as the primary database, and a JSON file system for fast data caching, avoiding unnecessary database queries on every request.
 
-Este proyecto es una evolución del template Handlebars + React SSR, adaptado específicamente para las necesidades de mi sitio web. El frontend es un Next.js serverless que consume este backend.
+This project is an evolution of the Handlebars + React SSR template, specifically adapted for the needs of this website. The frontend is a serverless Next.js that consumes this backend.
 
-## Características
+## Features
 
-- **Server-Side Rendering (SSR)**: Las páginas se renderizan en el servidor usando templates Handlebars para una primera carga más rápida.
-- **Integración con React**: Componentes React se cargan y opcionalmente hidratan en el navegador desde las vistas Handlebars.
-- **Bundling con Webpack**: Puntos de entrada de React y imports dinámicos se empaquetan con Webpack 5.
-- **Estilos con SASS**: Archivos SCSS modulares se compilan en un solo output CSS.
-- **Autenticación y Sesiones**: Autenticación basada en sesiones con rutas protegidas y flujo de login/logout.
-- **Dashboard CMS**: Un panel de administración estilo CMS creado con Handlebars y React integrado para gestionar contenido fácilmente.
-- **Integración con Vercel**: Solicita redeploys automáticos del frontend Next.js cuando se actualiza contenido.
-- **Cloudflare R2**: Sube assets, recupera enlaces y metadata para optimizar el almacenamiento.
-- **Firestore como DB**: Almacena información principal en Firestore para escalabilidad.
-- **Caché con JSON**: Crea archivos JSON en el sistema de archivos para acceso rápido, reduciendo consultas a la DB.
-- **Integración con Kick API**: Maneja webhooks, eventos y suscripciones para funcionalidades en vivo.
-- **Herramientas de Desarrollo**: Modo watch para cambios en JavaScript, CSS y servidor en desarrollo.
-- **Arquitectura Modular**: Separación limpia de rutas, vistas, componentes, middlewares y utilidades.
+- **Authentication and Sessions**: Session-based authentication with protected routes and login/logout flow.
+- **CMS Dashboard**: An admin panel-style CMS built with Handlebars and integrated React for easy content management.
+- **Vercel Integration**: Requests automatic redeploys of the Next.js frontend when content is updated.
+- **Cloudflare R2**: Uploads assets, retrieves links and metadata to optimize storage.
+- **Firestore as DB**: Stores main information in Firestore for scalability.
+- **JSON Cache**: Creates JSON files in the file system for fast access, reducing DB queries.
+- **Kick API Integration**: Handles webhooks, events, and subscriptions for live functionalities.
+- **Development Tools**: Watch mode for changes in JavaScript, CSS, and server in development.
+- **Modular Architecture**: Clean separation of routes, views, components, middlewares, and utilities.
 
-## Tecnologías Usadas
+For details on Server-Side Rendering (SSR), React integration, Webpack bundling, SASS styling, and other template-related features, refer to my [Handlebars-React-SSR-Template](https://github.com/Indresk/Handlebars-React-SSR-Template.git).
+
+## Technologies Used
 
 - **Backend**: Node.js, Express.js
 - **Templating**: Handlebars (express-handlebars)
 - **Frontend**: React 19, React DOM
 - **Build Tools**: Webpack 5, Babel
-- **Estilos**: SASS/SCSS
-- **Autenticación**: `express-session`, `argon2` para hashing de contraseñas
-- **Base de Datos**: Firebase Firestore
-- **Almacenamiento**: Cloudflare R2
-- **Servicios**: Kick API para webhooks y eventos
-- **Desarrollo**: `concurrently`, modo watch de Node.js
+- **Styling**: SASS/SCSS
+- **Authentication**: `express-session`, `argon2` for password hashing
+- **Database**: Firebase Firestore
+- **Storage**: Cloudflare R2
+- **Services**: Kick API for webhooks and events
+- **Development**: `concurrently`, Node.js watch mode
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 ├── src/
-│   ├── config/                 # Configuraciones y helpers
-│   │   ├── firebase.js         # Configuración de Firebase
-│   │   ├── handlebarsHelpers.js # Helpers para Handlebars
-│   │   └── sessionConfig.js    # Configuración de sesiones
-│   ├── db/                     # Manejo de bases de datos
-│   │   ├── fileSystem/         # Sistema de archivos para caché JSON
+│   ├── config/                 # Configurations and helpers
+│   │   ├── firebase.js         # Firebase configuration
+│   │   ├── handlebarsHelpers.js # Helpers for Handlebars
+│   │   ├── r2Config.js         # R2 configuration
+│   │   └── sessionConfig.js    # Session configuration
+│   ├── controllers/            # Express controllers
+│   │   ├── assets.controller.js
+│   │   ├── auth.controller.js
+│   │   ├── content.controller.js
+│   │   ├── deploy.controller.js
+│   │   └── webhook.controller.js
+│   ├── db/                     # Database handling
+│   │   ├── fileSystem/         # File system for JSON cache
 │   │   │   └── eraseSessions.js
-│   │   └── firestore/          # Integración con Firestore
+│   │   └── firestore/          # Firestore integration
 │   │       ├── auth.js
+│   │       ├── content.js
 │   │       ├── liveStatus.js
 │   │       └── temporalGeneral.js
-│   ├── middlewares/            # Middlewares de Express
-│   │   ├── auth.js             # Autenticación
-│   │   ├── kickWebhook.js      # Webhooks de Kick
-│   │   └── rateLimiters.js     # Limitadores de tasa
-│   ├── react/                  # Entrada de React, mapa de componentes y componentes
+│   ├── middlewares/            # Express middlewares
+│   │   ├── auth.js             # Authentication
+│   │   ├── kickWebhook.js      # Kick webhooks
+│   │   ├── rateLimiters.js     # Rate limiters
+│   │   └── upload.js           # Upload middleware
+│   ├── react/                  # React entry, component map, and components
 │   │   ├── componentMap.js
 │   │   ├── index.jsx
 │   │   └── components/
-│   │       ├── App.jsx
-│   │       ├── NavDropdown.jsx
-│   │       └── Test2.jsx
-│   ├── routes/                 # Rutas de Express
-│   │   ├── api.routes.js       # Rutas de API
-│   │   ├── auth.routes.js      # Rutas de autenticación
-│   │   ├── views.routes.js     # Rutas de vistas
-│   │   └── webhook.routes.js   # Rutas de webhooks
-│   ├── sass/                   # Hojas de estilo SCSS
+│   │       ├── cms/
+│   │       │   ├── AssetsManager.jsx
+│   │       │   ├── ContentManager.jsx
+│   │       │   ├── DeployButton.jsx
+│   │       │   └── LiveStatus.jsx
+│   │       └── utils/
+│   │           └── LazyImage.jsx
+│   ├── routes/                 # Express routes
+│   │   ├── api.routes.js       # API routes
+│   │   ├── assets.routes.js    # Assets routes
+│   │   ├── auth.routes.js      # Authentication routes
+│   │   ├── content.routes.js   # Content routes
+│   │   ├── deploy.routes.js    # Deploy routes
+│   │   ├── views.routes.js     # Views routes
+│   │   └── webhook.routes.js   # Webhook routes
+│   ├── sass/                   # SCSS stylesheets
 │   │   ├── index.scss
 │   │   └── [partials].scss     # _base.scss, _buttons.scss, etc.
-│   ├── services/               # Servicios externos
-│   │   ├── auth/               # Servicios de autenticación
+│   ├── services/               # External services
+│   │   ├── auth/               # Authentication services
 │   │   │   ├── hashing.js
 │   │   │   └── validation.js
-│   │   ├── kick/               # Servicios de Kick API
+│   │   ├── cache/              # Cache services
+│   │   │   └── jsonCache.js
+│   │   ├── kick/               # Kick API services
 │   │   │   ├── auth.js
 │   │   │   ├── eventHandlers.js
 │   │   │   ├── subscriptionManager.js
 │   │   │   └── tokenManager.js
-│   │   └── r2Bucket/           # Servicios de Cloudflare R2
-│   ├── util/                   # Utilidades
+│   │   ├── r2/                 # Cloudflare R2 services
+│   │   │   └── storage.js
+│   │   └── vercel/             # Vercel services
+│   │       └── deploy.js
+│   ├── util/                   # Utilities
 │   │   ├── dirname.js
-│   │   └── pkceManager.js      # Manejo de PKCE para OAuth
-│   └── views/                  # Templates de Handlebars
-│       ├── index.handlebars
+│   │   └── pkceManager.js      # PKCE handling for OAuth
+│   └── views/                  # Handlebars templates
 │       ├── login.handlebars
-│       ├── protected.handlebars
-│       ├── test1.handlebars
-│       ├── test2.handlebars
+│       ├── cms/
+│       │   ├── assets.handlebars
+│       │   ├── content.handlebars
+│       │   └── dashboard.handlebars
 │       ├── layouts/
 │       │   ├── auth.handlebars
-│       │   └── main.handlebars
+│       │   └── cms.handlebars
 │       └── partials/
-│           ├── data.handlebars
-│           ├── footer.handlebars
-│           └── header.handlebars
-├── localData/                  # Almacenamiento local de datos
-│   └── sessions/               # Archivos de sesiones
-├── public/                     # Assets estáticos output
-│   ├── assets/
+│           └── data.handlebars
+├── localData/                  # Local data storage
+│   ├── cache/                  # JSON cache files
+│   │   ├── content_albums.json
+│   │   ├── content_general-data_live-public.json
+│   │   └── content_shows.json
+│   └── sessions/               # Session files
+├── public/                     # Static assets output
 │   ├── css/
 │   │   └── styles.css
 │   └── js/
+│       ├── cms-assets.chunk.js
+│       ├── cms-content.chunk.js
+│       ├── cms-deploy.chunk.js
+│       ├── cms-live.chunk.js
 │       ├── main.bundle.js
-│       ├── test1.chunk.js
-│       ├── test2.chunk.js
 │       └── vendors.bundle.js
 ├── babel.config.js
 ├── webpack.config.js
@@ -110,161 +132,113 @@ Este proyecto es una evolución del template Handlebars + React SSR, adaptado es
 └── index.js
 ```
 
-## Primeros Pasos
+## Getting Started
 
-### Prerrequisitos
+### Prerequisites
 
-- Node.js (v16 o superior)
-- SASS (v1.9 o superior)
-- npm o yarn
+- Node.js (v16 or higher)
+- SASS (v1.9 or higher)
+- npm or yarn
 
-### Instalación
+### Installation
 
-1. Clona o descarga este repositorio.
-2. Navega al directorio del proyecto.
-3. Instala las dependencias:
+1. Clone or download this repository.
+2. Navigate to the project directory.
+3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-### Configuración del Entorno
+### Environment Configuration
 
-Crea un archivo `.env` en el directorio raíz con las siguientes variables (ajusta según tus credenciales):
+Create a `.env` file in the root directory with the variables following the .env.example format (adjust according to your credentials).
 
-```
-PORT=10100
-SECRET_SESSION=tu-clave-secreta-aqui
+### Development
 
-# Firebase
-FIREBASE_PROJECT_ID=tu-proyecto-firebase
-FIREBASE_PRIVATE_KEY_ID=tu-key-id
-FIREBASE_PRIVATE_KEY=tu-private-key
-FIREBASE_CLIENT_EMAIL=tu-client-email
-FIREBASE_CLIENT_ID=tu-client-id
-FIREBASE_AUTH_URI=https://accounts.google.com/o/oauth2/auth
-FIREBASE_TOKEN_URI=https://oauth2.googleapis.com/token
-FIREBASE_AUTH_PROVIDER_CERT_URL=https://www.googleapis.com/oauth2/v1/certs
-FIREBASE_CLIENT_CERT_URL=tu-cert-url
-
-# Cloudflare R2
-R2_ACCESS_KEY_ID=tu-access-key
-R2_SECRET_ACCESS_KEY=tu-secret-key
-R2_ACCOUNT_ID=tu-account-id
-R2_BUCKET_NAME=tu-bucket
-
-# Vercel
-VERCEL_ACCESS_TOKEN=tu-token-vercel
-VERCEL_PROJECT_ID=tu-project-id
-
-# Kick API
-KICK_CLIENT_ID=tu-client-id
-KICK_CLIENT_SECRET=tu-client-secret
-```
-
-### Desarrollo
-
-Para iniciar el servidor de desarrollo con recarga automática:
+To start the development server with automatic reloading:
 
 ```bash
 npm run dev
 ```
 
-Este comando ejecuta:
+This command runs:
 
-- Webpack en modo watch para bundles de React
-- Servidor Node.js en modo watch
-- Compilador SASS en modo watch
+- Webpack in watch mode for React bundles
+- Node.js server in watch mode
+- SASS compiler in watch mode
 
-La aplicación estará disponible en `http://localhost:10100`.
+The application will be available at `http://localhost:10000` by default.
 
-### Build de Producción
+### Production Build
 
-Para construir para producción (todo está configurado como prestart, pero puedes ejecutar):
+To build for production (everything is configured as prestart, but you can run):
 
 ```bash
 npm run build && npm run build:css
 ```
 
-Esto compila y minifica todos los assets.
+This compiles and minifies all assets.
 
-Para iniciar el servidor de producción:
+To start the production server:
 
 ```bash
 npm start
 ```
 
-## Uso
+## Usage
 
-### Autenticación
+### Authentication
 
-El proyecto incluye un flujo básico de login con manejo de sesiones:
+The project includes a basic login flow with session management:
 
-- **Login**: POST a `/auth/login` con campos `email` y `password`.
-- **Logout**: POST a `/auth/logout`.
-- **Rutas Protegidas**: Usa el middleware `requireAuth` para proteger rutas.
-- **Estado de Sesión**: Disponible en templates vía `isAuthenticated` y `sessionUser`.
+- **Login**: POST to `/auth/login` with `email` and `password` fields.
+- **Logout**: POST to `/auth/logout`.
+- **Protected Routes**: Use the `requireAuth` middleware to protect routes.
+- **Session State**: Available in templates via `isAuthenticated` and `sessionUser`.
 
-Credenciales de prueba: `test@example.com` / `asdasd`.
+Test credentials: `test@example.com` / `asdasd`.
 
-### Integración de Componentes React
+For React component integration details, refer to the [Handlebars-React-SSR-Template](https://github.com/Indresk/Handlebars-React-SSR-Template.git).
 
-1. Crea un componente React en `src/react/components/`.
-2. Regístralo en `src/react/componentMap.js`.
-3. Incluye un `<div id="tu-componente"></div>` correspondiente en un template Handlebars.
+### CMS Dashboard
 
-Ejemplo de mapeo:
+The dashboard is available on protected routes (e.g., `/protected`). From here you can:
 
-```javascript
-{
-  id: 'tu-componente',
-  component: () => import(/* webpackChunkName: "tu-componente" */ './components/TuComponente.jsx'),
-  hydrate: true,
-  pages: ['/'],
-  props: {},
-}
-```
+- Manage Content: Create, edit, and delete entries in Firestore.
+- Upload Assets: Use Cloudflare R2 to upload images/videos and get links/metadata.
+- Request Redeploys: Integrate with Vercel to redeploy the frontend automatically.
+- View Cache: Data is stored in JSON for fast access.
+- Handle Kick Events: Receive webhooks and manage live subscriptions.
 
-El runtime carga solo los componentes mapeados para la página actual y los hidrata si `hydrate: true`.
+### External Integrations
 
-### Dashboard CMS
-
-El dashboard está disponible en rutas protegidas (ej. `/protected`). Desde aquí puedes:
-
-- Gestionar contenido: Crear, editar y eliminar entradas en Firestore.
-- Subir Assets: Usa Cloudflare R2 para subir imágenes/videos y obtener enlaces/metadata.
-- Solicitar Redeploys: Integra con Vercel para redeployar el frontend automáticamente.
-- Ver Caché: Los datos se almacenan en JSON para acceso rápido.
-- Manejar Eventos de Kick: Recibe webhooks y maneja suscripciones en vivo.
-
-### Integraciones Externas
-
-- **Vercel**: Al actualizar contenido, se puede disparar un redeploy del sitio Next.js.
-- **Cloudflare R2**: Para almacenamiento de assets con enlaces públicos.
-- **Firestore**: Base de datos NoSQL para datos persistentes.
-- **Sistema de Archivos JSON**: Caché local para reducir latencia.
-- **Kick API**: Para funcionalidades relacionadas con streaming y eventos.
+- **Vercel**: When updating content, it can trigger a redeploy of the Next.js site.
+- **Cloudflare R2**: For asset storage with public links.
+- **Firestore**: NoSQL database for persistent data.
+- **JSON File System**: Local cache to reduce latency.
+- **Kick API**: For streaming-related functionalities and events.
 
 ## Scripts
 
-- `npm run dev` - Inicia servidor de desarrollo con recarga automática.
-- `npm run build` - Construye assets de producción.
-- `npm run build:watch` - Construye assets en modo watch.
-- `npm start` - Inicia servidor de producción.
-- `npm run dev:css` - Observa y compila SASS en desarrollo.
-- `npm run build:css` - Compila y comprime SASS para producción.
+- `npm run dev` - Starts development server with automatic reloading.
+- `npm run build` - Builds production assets.
+- `npm run build:watch` - Builds assets in watch mode.
+- `npm start` - Starts production server.
+- `npm run dev:css` - Watches and compiles SASS in development.
+- `npm run build:css` - Compiles and compresses SASS for production.
 
-## En Desarrollo
+## In Development
 
-- Conectar completamente con Vercel para redeploys automáticos (ya parcialmente implementado).
-- Optimizar el sistema de caché JSON.
-- Agregar más funcionalidades al dashboard CMS.
-- Mejorar la integración con Kick para eventos en tiempo real.
+- Fully connect with Vercel for automatic redeploys (partially implemented).
+- Optimize the JSON cache system.
+- Add more functionalities to the CMS dashboard.
+- Improve Kick integration for real-time events.
 
-## Contribuciones
+## Contributions
 
-¡Las contribuciones son bienvenidas! Siéntete libre de enviar un pull request o abrir un issue si tienes sugerencias o mejoras.
+Contributions are welcome! Feel free to submit a pull request or open an issue if you have suggestions or improvements.
 
-## Licencia
+## License
 
-Este proyecto está bajo la Licencia MIT.
+This project is licensed under the MIT License.

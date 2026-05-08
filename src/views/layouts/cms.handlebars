@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{metaInfo.title}} - CMS Daliah Banda</title>
+	<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="cms-layout">
+
+	<aside class="sidebar" id="sidebar">
+		<div class="sidebar__brand">
+			<span class="sidebar__logo">DB</span>
+			<span class="sidebar__name">Daliah Banda CMS</span>
+			<button class="btn btn--icon" id="sidebar-toggle-inner" aria-label="Menú">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+					<path d="M3 12h18M3 6h18M3 18h18"/>
+				</svg>
+			</button>
+		</div>
+		<nav class="sidebar__nav">
+			{{#each globalInfo.navLinks}}
+			<a href="{{this.link}}" class="sidebar__link">{{this.name}}</a>
+			{{/each}}
+		</nav>
+		<div class="sidebar__footer">
+			<span class="sidebar__user">{{sessionUser.email}}</span>
+			<form action="/auth/logout" method="post">
+				<button type="submit" class="btn btn--ghost btn--sm btn--full">Cerrar sesión</button>
+			</form>
+		</div>
+	</aside>
+
+	<div class="cms-main">
+		<header class="cms-topbar">
+			<button class="btn btn--icon" id="sidebar-toggle" aria-label="Menú">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+					<path d="M3 12h18M3 6h18M3 18h18"/>
+				</svg>
+			</button>
+			<h1 class="cms-topbar__title">{{metaInfo.title}}</h1>
+		</header>
+		<main class="cms-content">
+			{{{body}}}
+		</main>
+	</div>
+
+	{{> data }}
+	<script src="/js/main.bundle.js"></script>
+	<script src="/js/vendors.bundle.js"></script>
+	<script>
+		(function () {
+			const toggle = document.getElementById('sidebar-toggle');
+			const toggleInner = document.getElementById('sidebar-toggle-inner');
+			const sidebar = document.getElementById('sidebar');
+			if (toggle && sidebar && toggleInner) {
+				toggle.addEventListener('click', () => sidebar.classList.toggle('is-open'));
+				toggleInner.addEventListener('click', () => sidebar.classList.toggle('is-open'))
+			}
+			const links = document.querySelectorAll('.sidebar__link');
+			links.forEach(function (link) {
+				if (link.getAttribute('href') === window.location.pathname) {
+					link.classList.add('sidebar__link--active');
+				}
+			});
+		})();
+	</script>
+</body>
+</html>

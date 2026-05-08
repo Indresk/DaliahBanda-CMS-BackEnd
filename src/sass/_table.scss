@@ -1,0 +1,45 @@
+@use 'variables' as *;
+
+$panel-border: #2a2a2a;
+
+.table-container {
+	overflow-x: auto;
+	border: 1px solid $panel-border;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.875rem;
+
+	th {
+		background: #252525;
+		color: $muted-color;
+		font-weight: 600;
+		text-align: left;
+		padding: 0.6rem 0.875rem;
+		border-bottom: 1px solid $panel-border;
+		white-space: nowrap;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	td {
+		padding: 0.6rem 0.875rem;
+		color: $inverted-text-color;
+		border-bottom: 1px solid $panel-border;
+		max-width: 240px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	tr:last-child td {
+		border-bottom: none;
+	}
+
+	tbody tr:hover td {
+		background: rgba(255, 255, 255, 0.02);
+	}
+}

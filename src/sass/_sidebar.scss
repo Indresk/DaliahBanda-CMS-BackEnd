@@ -1,0 +1,155 @@
+@use 'variables' as *;
+
+$sidebar-width: 250px;
+$topbar-height: 56px;
+$cms-bg: #0f0f0f;
+$sidebar-bg: #141414;
+$sidebar-border: #2a2a2a;
+
+body.cms-layout {
+	background: $cms-bg;
+	color: $inverted-text-color;
+
+	#root {
+		display: block;
+	}
+}
+
+.sidebar {
+	width: $sidebar-width;
+	background: $sidebar-bg;
+	border-right: 1px solid $sidebar-border;
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	z-index: 100;
+	transition: transform 0.25s ease;
+	display: none;
+
+	&.is-open {
+		display: flex;
+	}
+
+	&__brand {
+		padding: 0.72rem 1rem;
+		border-bottom: 1px solid $sidebar-border;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	&__logo {
+		background: $background-color;
+		color: $accent-color;
+		font-weight: 700;
+		font-size: 0.8rem;
+		width: 2rem;
+		height: 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	&__name {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: $inverted-text-color;
+		line-height: 1.3;
+	}
+
+	&__nav {
+		flex: 1;
+		padding: 0.75rem 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+		overflow-y: auto;
+	}
+
+	&__link {
+		display: flex;
+		align-items: center;
+		padding: 0.6rem 1rem;
+		color: $muted-color;
+		text-decoration: none;
+		font-size: 0.875rem;
+		transition:
+			color 0.15s,
+			background 0.15s;
+
+		&:hover {
+			color: $inverted-text-color;
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		&--active {
+			color: $background-color;
+			background: rgba(219, 239, 1, 0.08);
+			font-weight: 600;
+		}
+	}
+
+	&__footer {
+		padding: 1rem;
+		border-top: 1px solid $sidebar-border;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	&__user {
+		font-size: 0.75rem;
+		color: $muted-color;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+.cms-main {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.cms-topbar {
+	height: $topbar-height;
+	background: $sidebar-bg;
+	border-bottom: 1px solid $sidebar-border;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0 1.5rem;
+	position: sticky;
+	top: 0;
+	z-index: 50;
+
+	&__title {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		color: $inverted-text-color;
+	}
+}
+
+.cms-content {
+	padding: 1.5rem;
+	flex: 1;
+}
+
+@media (max-width: 767px) {
+	.sidebar {
+		transform: translateX(-100%);
+
+		&.is-open {
+			transform: translateX(0);
+		}
+	}
+
+	.cms-main {
+		margin-left: 0;
+	}
+}

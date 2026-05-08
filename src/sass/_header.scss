@@ -19,10 +19,6 @@ header {
 	}
 }
 nav {
-	position: fixed;
-	position-anchor: --main-header;
-	top: anchor(bottom);
-	right: anchor(right);
 	background-color: $accent-color;
 	& li {
 		list-style: none;

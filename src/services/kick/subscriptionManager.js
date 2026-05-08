@@ -9,7 +9,7 @@ export async function setSubscriptionToLiveStatus(accessToken) {
 				Accept: '*/*',
 			},
 			body: JSON.stringify({
-				broadcaster_user_id: 87378324,
+				broadcaster_user_id: Number(process.env.KICK_BROADCASTER_ID) || 87378324,
 				events: [
 					{
 						name: 'livestream.status.updated',
