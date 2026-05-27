@@ -1,8 +1,8 @@
 # Daliah Banda CMS Backend
 
-This is the custom CMS backend for **Daliah Banda**'s website (daliahbanda.com). It is a content management system (CMS) built with Node.js, Express, Handlebars, and integrated React, designed to handle assets, dynamic content, and more. It includes advanced integrations with Vercel for automatic frontend redeploys, Cloudflare R2 for storage and asset management, Firestore as the primary database, and a JSON file system for fast data caching, avoiding unnecessary database queries on every request.
+This is the custom CMS backend for **Daliah Banda**'s website [daliahbanda.com](daliahbanda.com). It is a content management system (CMS) built with Node.js, Express, Handlebars, and integrated React, designed to handle assets, dynamic content, and more. It includes advanced integrations with Vercel for automatic frontend redeploys, Cloudflare R2 for storage and asset management, Firestore as the primary database, and a JSON file system for fast data caching, avoiding unnecessary database queries on every request.
 
-This project is an evolution of the Handlebars + React SSR template, specifically adapted for the needs of this website. The frontend is a serverless Next.js that consumes this backend.
+This project is an implementation of my Handlebars + React SSR template, specifically adapted for the needs of this website. The frontend is a serverless Next.js that consumes this backend.
 
 ## Features
 
@@ -188,22 +188,11 @@ npm start
 
 ## Usage
 
-### Authentication
-
-The project includes a basic login flow with session management:
-
-- **Login**: POST to `/auth/login` with `email` and `password` fields.
-- **Logout**: POST to `/auth/logout`.
-- **Protected Routes**: Use the `requireAuth` middleware to protect routes.
-- **Session State**: Available in templates via `isAuthenticated` and `sessionUser`.
-
-Test credentials: `test@example.com` / `asdasd`.
-
-For React component integration details, refer to the [Handlebars-React-SSR-Template](https://github.com/Indresk/Handlebars-React-SSR-Template.git).
+For React component integration details, AuthWorkFlow, refer to the [Handlebars-React-SSR-Template](https://github.com/Indresk/Handlebars-React-SSR-Template.git).
 
 ### CMS Dashboard
 
-The dashboard is available on protected routes (e.g., `/protected`). From here you can:
+The dashboard is available on protected routes. From here you can:
 
 - Manage Content: Create, edit, and delete entries in Firestore.
 - Upload Assets: Use Cloudflare R2 to upload images/videos and get links/metadata.
