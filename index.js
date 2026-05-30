@@ -31,6 +31,7 @@ app.set('views', __dirname + '/src/views');
 
 app.use(express.static(__dirname + '/public'));
 
+app.get('/', (req, res) => res.redirect(FRONT_URL));
 app.use('/cms', viewsRoutes);
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
